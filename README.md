@@ -48,6 +48,7 @@ Then add `FeatherMailDriverSMTP` to your target dependencies:
 - [Feather Mail](https://github.com/feather-framework/feather-mail)
 - [SwiftNIO SMTP](https://github.com/BinaryBirds/swift-nio-smtp)
 - [Feather Mail Driver SES](https://github.com/feather-framework/feather-mail-driver-ses)
+- [Feather Mail Driver Memory](https://github.com/feather-framework/feather-memory-mail)
 
 ## Development
 
