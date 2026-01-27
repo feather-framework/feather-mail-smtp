@@ -35,12 +35,11 @@ let package = Package(
     ],
     dependencies: [
         // [docc-plugin-placeholder]
-        .package(url: "https://github.com/apple/swift-log", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-log", from: "1.6.0"),
         .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.0.0"),
-        //.package(url: "https://github.com/feather-framework/feather-mail", .upToNextMinor(from: "0.5.0")),
-        .package(path: "../feather-mail"),
-        .package(path: "../swift-nio-smtp"),
+        .package(url: "https://github.com/feather-framework/feather-mail", .upToNextMinor(from: "1.0.0-beta.1")),
+        .package(url: "https://github.com/BinaryBirds/swift-nio-smtp", .upToNextMinor(from: "1.0.0-beta.1")),
     ],
     targets: [
         .target(
