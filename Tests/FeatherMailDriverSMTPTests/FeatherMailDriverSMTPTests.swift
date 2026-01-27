@@ -1,6 +1,6 @@
 //
 //  FeatherMailDriverSMTPTests.swift
-//  FeatherMailDriverSMTPTests
+//  feather-mail-driver-smtp
 //
 //  Created by Tibor Bodecs on 2023. 01. 16..
 //
@@ -8,67 +8,105 @@
 import NIO
 import Logging
 import Foundation
-import XCTest
-import FeatherComponent
-import FeatherMail
-import FeatherMailDriverSMTP
-import XCTFeatherMail
+import Testing
+import NIOSMTP
+@testable import FeatherMail
+@testable import FeatherMailDriverSMTP
 
-final class FeatherMailDriverSMTPTests: XCTestCase {
+@Suite
+struct FeatherMailDriverSMTPTests {
 
-    var host: String {
-        ProcessInfo.processInfo.environment["SMTP_HOST"]!
+    // MARK: - Environment configuration
+
+    private let config = TestSMTPConfig.load()
+
+    private func makeDriver() -> SMTPMailDriver {
+        let config = Configuration(
+            hostname: config.host,
+            signInMethod: config.user.isEmpty
+                ? .anonymous
+                : .credentials(username: config.user, password: config.pass)
+        )
+
+        return SMTPMailDriver(configuration: config)
     }
 
-    var user: String {
-        ProcessInfo.processInfo.environment["SMTP_USER"]!
+    // MARK: - Tests
+
+    @Test
+    func sendPlainTextMail() async throws {
+        if !config.isComplete { return }
+        let driver = makeDriver()
+
+        let mail = Mail(
+            from: .init(config.from),
+            to: [.init(config.to)],
+            subject: "SMTP plain text test",
+            body: .plainText("Hello from Feather SMTP driver.")
+        )
+
+        try await driver.send(mail)
+        try await driver.shutdown()
     }
 
-    var pass: String {
-        ProcessInfo.processInfo.environment["SMTP_PASS"]!
+    @Test
+    func sendHTMLMail() async throws {
+        if !config.isComplete { return }
+        let driver = makeDriver()
+
+        let mail = Mail(
+            from: .init(config.from),
+            to: [.init(config.to)],
+            subject: "SMTP HTML test",
+            body: .html("<p>Hello <strong>SMTP</strong></p>")
+        )
+
+        try await driver.send(mail)
+        try await driver.shutdown()
     }
 
-    var from: String {
-        ProcessInfo.processInfo.environment["MAIL_FROM"]!
-    }
+    @Test
+    func sendMailWithAttachment() async throws {
+        if !config.isComplete { return }
+        let driver = makeDriver()
 
-    var to: String {
-        ProcessInfo.processInfo.environment["MAIL_TO"]!
-    }
+        let data = Array("Hello attachment".utf8)
 
-    func testSMTPDriverUsingTestSuite() async throws {
-        let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-
-        do {
-            let registry = ComponentRegistry()
-            try await registry.addMail(
-                SMTPMailComponentContext(
-                    eventLoopGroup: eventLoopGroup,
-                    smtpConfig: .init(
-                        hostname: self.host,
-                        signInMethod: .credentials(
-                            username: self.user,
-                            password: self.pass
-                        )
-                    )
+        let mail = Mail(
+            from: .init(config.from),
+            to: [.init(config.to)],
+            subject: "SMTP Attachment Test",
+            body: .plainText("This mail contains an attachment."),
+            attachments: [
+                .init(
+                    name: "test.txt",
+                    contentType: "text/plain",
+                    data: data
                 )
-            )
+            ]
+        )
 
-            let mail = try await registry.mail()
+        try await driver.send(mail)
+        try await driver.shutdown()
+    }
 
-            do {
-                let suite = MailTestSuite(mail)
-                try await suite.testAll(from: from, to: to)
-            }
-            catch {
-                throw error
-            }
+    @Test
+    func invalidMailFailsBeforeSending() async {
+        if !config.isComplete { return }
+        let driver = makeDriver()
+
+        let mail = Mail(
+            from: .init(" "),
+            to: [.init(config.to)],
+            subject: "Invalid sender",
+            body: .plainText("This should not be sent.")
+        )
+
+        await #expect(throws: MailError.validation(.invalidSender)) {
+            try await driver.send(mail)
         }
-        catch {
-            XCTFail("\(error)")
-        }
 
-        try await eventLoopGroup.shutdownGracefully()
+        try? await driver.shutdown()
     }
 
 }
