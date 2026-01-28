@@ -2,7 +2,11 @@
 
 SMTP-backed mail driver for Feather Mail using SwiftNIO.
 
-![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)
+[
+    ![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)
+](
+    https://github.com/feather-framework/feather-smtp-mail/releases/tag/1.0.0-beta.1
+)
 
 ## Features
 
@@ -29,26 +33,34 @@ SMTP-backed mail driver for Feather Mail using SwiftNIO.
 Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-mail-driver-smtp", .upToNextMinor(from: "1.0.0-beta.1")),
+.package(url: "https://github.com/feather-framework/feather-smtp-mail", exact: "1.0.0-beta.1"),
 ```
 
 Then add `FeatherMailDriverSMTP` to your target dependencies:
 
 ```swift
-.product(name: "FeatherMailDriverSMTP", package: "feather-mail-driver-smtp"),
+.product(name: "FeatherMailDriverSMTP", package: "feather-smtp-mail"),
 ```
 
 ## Usage
+
+[ 
+    ![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)
+](
+    https://feather-framework.github.io/feather-smtp-mail/
+)
+
+API documentation is available at the following link.
 
 > [!WARNING]
 > This repository is a work in progress, things can break until it reaches v1.0.0.
 
 ## Related repositories
 
-- [Feather Mail](https://github.com/feather-framework/feather-mail)
 - [SwiftNIO SMTP](https://github.com/BinaryBirds/swift-nio-smtp)
-- [Feather Mail Driver SES](https://github.com/feather-framework/feather-mail-driver-ses)
-- [Feather Mail Driver Memory](https://github.com/feather-framework/feather-memory-mail)
+- [Feather Mail](https://github.com/feather-framework/feather-mail)
+- [Feather SES Mail](https://github.com/feather-framework/feather-ses-mail)
+- [Feather Memory Mail](https://github.com/feather-framework/feather-memory-mail)
 
 ## Development
 
@@ -61,4 +73,4 @@ Then add `FeatherMailDriverSMTP` to your target dependencies:
 
 ## Contributing
 
-[Pull requests](https://github.com/feather-framework/feather-mail-driver-smtp/pulls) are welcome. Please keep changes focused and include tests for new logic.
+[Pull requests](https://github.com/feather-framework/feather-smtp-mail/pulls) are welcome. Please keep changes focused and include tests for new logic.

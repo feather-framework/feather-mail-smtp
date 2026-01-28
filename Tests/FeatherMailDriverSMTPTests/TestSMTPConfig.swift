@@ -1,6 +1,6 @@
 //
 //  TestSMTPConfig.swift
-//  feather-mail-driver-smtp
+//  feather-smtp-mail
 //
 //  Created by Binary Birds on 2026. 01. 26..
 //

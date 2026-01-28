@@ -1,6 +1,6 @@
 //
 //  FeatherMailDriverSMTPTests.swift
-//  feather-mail-driver-smtp
+//  feather-smtp-mail
 //
 //  Created by Tibor Bodecs on 2023. 01. 16..
 //

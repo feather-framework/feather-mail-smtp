@@ -1,6 +1,6 @@
 //
 //  SMTPMailDriver.swift
-//  feather-mail-driver-smtp
+//  feather-smtp-mail
 //
 //  Created by gerp83 on 2026. 01. 17.
 //
