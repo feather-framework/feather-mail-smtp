@@ -31,7 +31,7 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
-        .library(name: "FeatherMailDriverSMTP", targets: ["FeatherMailDriverSMTP"]),
+        .library(name: "FeatherSMTPMail", targets: ["FeatherSMTPMail"]),
     ],
     dependencies: [
         // [docc-plugin-placeholder]
@@ -43,7 +43,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FeatherMailDriverSMTP",
+            name: "FeatherSMTPMail",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "NIOSMTP", package: "swift-nio-smtp"),
@@ -53,10 +53,10 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "FeatherMailDriverSMTPTests",
+            name: "FeatherSMTPMailTests",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .target(name: "FeatherMailDriverSMTP"),
+                .target(name: "FeatherSMTPMail"),
             ]
         ),
     ]

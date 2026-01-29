@@ -1,5 +1,5 @@
 //
-//  FeatherMailDriverSMTPTests.swift
+//  FeatherSMTPMailTests.swift
 //  feather-smtp-mail
 //
 //  Created by Tibor Bodecs on 2023. 01. 16..
@@ -15,10 +15,10 @@ import Foundation
 import Testing
 import NIOSMTP
 @testable import FeatherMail
-@testable import FeatherMailDriverSMTP
+@testable import FeatherSMTPMail
 
 @Suite
-struct FeatherMailDriverSMTPTests {
+struct FeatherSMTPMailTests {
 
     // MARK: - Environment configuration
 

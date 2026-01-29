@@ -1,4 +1,4 @@
-# Feather Mail Driver SMTP
+# Feather SMTP Mail 
 
 SMTP-backed mail driver for Feather Mail using SwiftNIO.
 
@@ -36,10 +36,10 @@ Use Swift Package Manager; add the dependency to your `Package.swift` file:
 .package(url: "https://github.com/feather-framework/feather-smtp-mail", exact: "1.0.0-beta.1"),
 ```
 
-Then add `FeatherMailDriverSMTP` to your target dependencies:
+Then add `FeatherSMTPMail` to your target dependencies:
 
 ```swift
-.product(name: "FeatherMailDriverSMTP", package: "feather-smtp-mail"),
+.product(name: "FeatherSMTPMail", package: "feather-smtp-mail"),
 ```
 
 ## Usage
