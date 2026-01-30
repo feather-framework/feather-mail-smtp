@@ -1,12 +1,8 @@
-# Feather SMTP Mail 
+# Feather SMTP Mail
 
 SMTP-backed mail driver for Feather Mail using SwiftNIO.
 
-[
-    ![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)
-](
-    https://github.com/feather-framework/feather-smtp-mail/releases/tag/1.0.0-beta.1
-)
+[![Release: 1.0.0-beta.1](https://img.shields.io/badge/Release-1%2E0%2E0--beta%2E1-F05138)](https://github.com/feather-framework/feather-smtp-mail/releases/tag/1.0.0-beta.1)
 
 ## Features
 
@@ -22,11 +18,11 @@ SMTP-backed mail driver for Feather Mail using SwiftNIO.
 
 - Swift 6.1+
 - Platforms:
-    - macOS 13+
-    - iOS 16+
-    - tvOS 16+
-    - watchOS 9+
-    - visionOS 1+
+  - macOS 13+
+  - iOS 16+
+  - tvOS 16+
+  - watchOS 9+
+  - visionOS 1+
 
 ## Installation
 
@@ -44,11 +40,7 @@ Then add `FeatherSMTPMail` to your target dependencies:
 
 ## Usage
 
-[ 
-    ![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)
-](
-    https://feather-framework.github.io/feather-smtp-mail/
-)
+[![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)](https://feather-framework.github.io/feather-smtp-mail/)
 
 API documentation is available at the following link.
 
@@ -66,8 +58,8 @@ API documentation is available at the following link.
 
 - Build: `swift build`
 - Test:
-    - local: `make test`
-    - using Docker: `make docker-test`
+  - local: `make test`
+  - using Docker: `make docker-test`
 - Format: `make format`
 - Check: `make check`
 

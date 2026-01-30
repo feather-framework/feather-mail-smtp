@@ -39,7 +39,6 @@ struct FeatherSMTPMailTests {
 
     @Test
     func sendPlainTextMail() async throws {
-        if !config.isComplete { return }
         let driver = makeDriver()
 
         let mail = Mail(
@@ -55,7 +54,6 @@ struct FeatherSMTPMailTests {
 
     @Test
     func sendHTMLMail() async throws {
-        if !config.isComplete { return }
         let driver = makeDriver()
 
         let mail = Mail(
@@ -71,7 +69,6 @@ struct FeatherSMTPMailTests {
 
     @Test
     func sendMailWithAttachment() async throws {
-        if !config.isComplete { return }
         let driver = makeDriver()
 
         let data = Array("Hello attachment".utf8)
@@ -96,7 +93,6 @@ struct FeatherSMTPMailTests {
 
     @Test
     func invalidMailFailsBeforeSending() async {
-        if !config.isComplete { return }
         let driver = makeDriver()
 
         let mail = Mail(
@@ -106,8 +102,19 @@ struct FeatherSMTPMailTests {
             body: .plainText("This should not be sent.")
         )
 
-        await #expect(throws: MailError.validation(.invalidSender)) {
+        do {
             try await driver.send(mail)
+            #expect(Bool(false))
+        }
+        catch {
+            if case let .validation(validationError) = error,
+                validationError == .invalidSubject
+            {
+                #expect(true)
+            }
+            else {
+                #expect(Bool(false))
+            }
         }
 
         try? await driver.shutdown()

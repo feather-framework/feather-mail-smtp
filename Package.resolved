@@ -1,5 +1,15 @@
 {
+  "originHash" : "6d645009b7381dc653bec0b54b22d44532b1bc3e8cd2c4c92b0377f8acbf440c",
   "pins" : [
+    {
+      "identity" : "feather-mail",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-mail",
+      "state" : {
+        "revision" : "4d6b927046be6c01147442b7a10135f20878fcc7",
+        "version" : "1.0.0-beta.1"
+      }
+    },
     {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
@@ -37,6 +47,15 @@
       }
     },
     {
+      "identity" : "swift-nio-smtp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BinaryBirds/swift-nio-smtp",
+      "state" : {
+        "revision" : "0aaaad70f29968cfcce7ae8250226002abe1d11d",
+        "version" : "1.0.0-beta.1"
+      }
+    },
+    {
       "identity" : "swift-nio-ssl",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-ssl",
@@ -55,5 +74,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

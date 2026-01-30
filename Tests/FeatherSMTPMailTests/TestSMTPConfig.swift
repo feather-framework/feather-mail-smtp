@@ -33,19 +33,12 @@ struct TestSMTPConfig {
         // below. Keep secrets out of source control.
         let env = ProcessInfo.processInfo.environment
         return TestSMTPConfig(
-            host: env["SMTP_HOST"] ?? "",
-            user: env["SMTP_USER"] ?? "",
-            pass: env["SMTP_PASS"] ?? "",
-            from: env["SMTP_FROM"] ?? "",
-            to: env["SMTP_TO"] ?? ""
+            host: env["SMTP_HOST"]!,
+            user: env["SMTP_USER"]!,
+            pass: env["SMTP_PASS"]!,
+            from: env["SMTP_FROM"]!,
+            to: env["SMTP_TO"]!
         )
     }
 
-    var isComplete: Bool {
-        !host.isEmpty
-            && !user.isEmpty
-            && !pass.isEmpty
-            && !from.isEmpty
-            && !to.isEmpty
-    }
 }
