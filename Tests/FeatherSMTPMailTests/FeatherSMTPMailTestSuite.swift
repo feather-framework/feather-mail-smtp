@@ -5,6 +5,7 @@
 //  Created by Tibor Bodecs on 2023. 01. 16..
 //
 
+import Foundation
 import NIO
 import Logging
 import Testing
@@ -18,6 +19,12 @@ struct FeatherSMTPMailTestSuite {
     // MARK: - Environment configuration
 
     private let config = TestSMTPConfig.load()
+    private func formatDateHeader() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
+        return dateFormatter.string(from: Date())
+    }
 
     private func runClient(
         hostname: String? = nil,
@@ -48,6 +55,7 @@ struct FeatherSMTPMailTestSuite {
 
         let client = SMTPMailClient(
             configuration: config,
+            dateHeader: { formatDateHeader() },
             eventLoopGroup: eventLoopGroup
         )
 

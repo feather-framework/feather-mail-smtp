@@ -1,15 +1,6 @@
 {
-  "originHash" : "6d645009b7381dc653bec0b54b22d44532b1bc3e8cd2c4c92b0377f8acbf440c",
+  "originHash" : "72968cec7a17f8d8284d91d8f293ba3219cfce96202ad8b64ab31d4316d23f81",
   "pins" : [
-    {
-      "identity" : "feather-mail",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-mail",
-      "state" : {
-        "revision" : "4d6b927046be6c01147442b7a10135f20878fcc7",
-        "version" : "1.0.0-beta.1"
-      }
-    },
     {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",

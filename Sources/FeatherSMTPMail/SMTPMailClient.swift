@@ -5,7 +5,6 @@
 //  Created by gerp83 on 2026. 01. 17.
 //
 
-import Foundation
 import Logging
 import FeatherMail
 import NIO
@@ -18,9 +17,12 @@ import NIOSMTP
 /// encodes them into SMTP-compatible DATA payloads, and delivers them using
 /// an internally managed SMTP client.
 ///
-/// The client owns the underlying SMTP client and is responsible for
-/// shutting it down when the server stops.
+/// The client owns the underlying SMTP transport. Event loop group lifecycle
+/// is managed by the provided `eventLoopGroup`.
 public struct SMTPMailClient: MailClient, Sendable {
+
+    private static let sharedEventLoopGroup: EventLoopGroup =
+        MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
 
     /// Validator applied before encoding and delivery.
     private let validator: MailValidator
@@ -28,8 +30,8 @@ public struct SMTPMailClient: MailClient, Sendable {
     /// Underlying SMTP client responsible for protocol communication.
     private let smtp: NIOSMTP
 
-    /// Raw mail encoder used to build SMTP DATA payloads.
-    private let rawEncoder = RawMailEncoder()
+    /// Mail encoder provider used to build SMTP DATA payload encoders.
+    private let mailEncoder: @Sendable () -> any MailEncoder
 
     /// Logger used for SMTP operations.
     private let logger: Logger
@@ -42,16 +44,29 @@ public struct SMTPMailClient: MailClient, Sendable {
     ///
     /// - Parameters:
     ///   - configuration: SMTP client configuration.
+    ///   - dateHeader: Provider for RFC 2822-formatted Date header values.
     ///   - validator: Validator applied before delivery.
-    ///   - eventLoopGroup: EventLoopGroup.
+    ///   - mailEncoder: Optional provider used to create mail encoders.
+    ///   - eventLoopGroup: EventLoopGroup. Defaults to a shared instance.
     ///   - logger: Logger used for SMTP request and transport logging.
     init(
         configuration: Configuration,
+        dateHeader: @escaping @Sendable () -> String,
         validator: MailValidator = BasicMailValidator(),
-        eventLoopGroup: EventLoopGroup,
+        mailEncoder: (@Sendable () -> any MailEncoder)? = nil,
+        eventLoopGroup: EventLoopGroup = sharedEventLoopGroup,
         logger: Logger = .init(label: "feather.mail.smtp")
     ) {
         self.validator = validator
+        self.mailEncoder =
+            mailEncoder
+            ?? {
+                RawMailEncoder(
+                    headerDateEncodingStrategy: {
+                        dateHeader()
+                    }
+                )
+            }
         self.smtp = NIOSMTP(
             eventLoopGroup: eventLoopGroup,
             configuration: configuration,
@@ -75,11 +90,7 @@ public struct SMTPMailClient: MailClient, Sendable {
             throw .validation(error)
         }
         do {
-            let raw = try rawEncoder.encode(
-                email,
-                dateHeader: formatDateHeader(),
-                messageID: createMessageID(for: email)
-            )
+            let raw = try mailEncoder().encode(mail: email)
             let recipients = (email.to + email.cc + email.bcc).map(\.email)
             let envelope = try SMTPEnvelope(
                 from: email.from.email,
@@ -113,17 +124,5 @@ public struct SMTPMailClient: MailClient, Sendable {
             return .unknown(underlying)
         }
         return .unknown(smtpError)
-    }
-
-    private func formatDateHeader() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
-        return dateFormatter.string(from: Date())
-    }
-
-    private func createMessageID(for mail: Mail) -> String {
-        let time = Date().timeIntervalSince1970
-        return "<\(time)\(mail.from.email.drop { $0 != "@" })>"
     }
 }
