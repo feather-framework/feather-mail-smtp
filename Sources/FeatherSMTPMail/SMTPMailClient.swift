@@ -44,9 +44,8 @@ public struct SMTPMailClient: MailClient, Sendable {
     ///
     /// - Parameters:
     ///   - configuration: SMTP client configuration.
-    ///   - dateHeader: Provider for RFC 2822-formatted Date header values.
-    ///   - validator: Validator applied before delivery.
     ///   - mailEncoder: Optional provider used to create mail encoders.
+    ///   - validator: Validator applied before delivery.
     ///   - eventLoopGroup: EventLoopGroup. Defaults to a shared instance.
     ///   - logger: Logger used for SMTP request and transport logging.
     init(
