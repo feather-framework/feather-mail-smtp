@@ -53,9 +53,12 @@ struct FeatherSMTPMailTestSuite {
         let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         defer { Task { await shutdownEventLoopGroup(eventLoopGroup) } }
 
+        let mailEncoder = RawMailEncoder(
+            headerDateEncodingStrategy: { formatDateHeader() }
+        )
         let client = SMTPMailClient(
             configuration: config,
-            dateHeader: { formatDateHeader() },
+            mailEncoder: mailEncoder,
             eventLoopGroup: eventLoopGroup
         )
 

@@ -31,7 +31,7 @@ public struct SMTPMailClient: MailClient, Sendable {
     private let smtp: NIOSMTP
 
     /// Mail encoder provider used to build SMTP DATA payload encoders.
-    private let mailEncoder: @Sendable () -> any MailEncoder
+    private let mailEncoder: any MailEncoder
 
     /// Logger used for SMTP operations.
     private let logger: Logger
@@ -51,22 +51,13 @@ public struct SMTPMailClient: MailClient, Sendable {
     ///   - logger: Logger used for SMTP request and transport logging.
     init(
         configuration: Configuration,
-        dateHeader: @escaping @Sendable () -> String,
+        mailEncoder: any MailEncoder,
         validator: MailValidator = BasicMailValidator(),
-        mailEncoder: (@Sendable () -> any MailEncoder)? = nil,
         eventLoopGroup: EventLoopGroup = sharedEventLoopGroup,
         logger: Logger = .init(label: "feather.mail.smtp")
     ) {
+        self.mailEncoder = mailEncoder
         self.validator = validator
-        self.mailEncoder =
-            mailEncoder
-            ?? {
-                RawMailEncoder(
-                    headerDateEncodingStrategy: {
-                        dateHeader()
-                    }
-                )
-            }
         self.smtp = NIOSMTP(
             eventLoopGroup: eventLoopGroup,
             configuration: configuration,
@@ -90,7 +81,7 @@ public struct SMTPMailClient: MailClient, Sendable {
             throw .validation(error)
         }
         do {
-            let raw = try mailEncoder().encode(mail: email)
+            let raw = try mailEncoder.encode(mail: email)
             let recipients = (email.to + email.cc + email.bcc).map(\.email)
             let envelope = try SMTPEnvelope(
                 from: email.from.email,
