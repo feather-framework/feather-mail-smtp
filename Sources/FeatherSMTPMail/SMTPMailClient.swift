@@ -21,9 +21,6 @@ import NIOSMTP
 /// is managed by the provided `eventLoopGroup`.
 public struct SMTPMailClient: MailClient, Sendable {
 
-    private static let sharedEventLoopGroup: EventLoopGroup =
-        MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
-
     /// Validator applied before encoding and delivery.
     private let validator: MailValidator
 
@@ -46,13 +43,13 @@ public struct SMTPMailClient: MailClient, Sendable {
     ///   - configuration: SMTP client configuration.
     ///   - mailEncoder: Optional provider used to create mail encoders.
     ///   - validator: Validator applied before delivery.
-    ///   - eventLoopGroup: EventLoopGroup. Defaults to a shared instance.
+    ///   - eventLoopGroup: EventLoopGroup. Defaults to `.singletonMultiThreadedEventLoopGroup`.
     ///   - logger: Logger used for SMTP request and transport logging.
-    init(
+    public init(
         configuration: Configuration,
         mailEncoder: any MailEncoder,
         validator: MailValidator = BasicMailValidator(),
-        eventLoopGroup: EventLoopGroup = sharedEventLoopGroup,
+        eventLoopGroup: EventLoopGroup = .singletonMultiThreadedEventLoopGroup,
         logger: Logger = .init(label: "feather.mail.smtp")
     ) {
         self.mailEncoder = mailEncoder
