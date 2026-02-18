@@ -1,8 +1,12 @@
-# Feather SMTP Mail
+# Feather Mail SMTP
 
 SMTP-backed mail client for Feather Mail using SwiftNIO.
 
-[![Release: 1.0.0-beta.3](https://img.shields.io/badge/Release-1.0.0--beta.3-F05138)](https://github.com/feather-framework/feather-mail-smtp/releases/tag/1.0.0-beta.3)
+[
+    ![Release: 1.0.0-beta.4](https://img.shields.io/badge/Release-1.0.0--beta.4-F05138)
+](
+    https://github.com/feather-framework/feather-mail-smtp/releases/tag/1.0.0-beta.4
+)
 
 ## Features
 
@@ -41,7 +45,11 @@ Then add `FeatherMailSMTP` to your target dependencies:
 
 ## Usage
 
-[![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)](https://feather-framework.github.io/feather-mail-smtp/)
+[
+    ![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)
+](
+    https://feather-framework.github.io/feather-mail-smtp/
+)
 
 API documentation is available at the following link.
 
@@ -52,8 +60,8 @@ API documentation is available at the following link.
 
 - [SwiftNIO SMTP](https://github.com/BinaryBirds/swift-nio-smtp)
 - [Feather Mail](https://github.com/feather-framework/feather-mail)
-- [Feather SES Mail](https://github.com/feather-framework/feather-ses-mail)
-- [Feather Memory Mail](https://github.com/feather-framework/feather-memory-mail)
+- [Feather Mail SES](https://github.com/feather-framework/feather-mail-ses)
+- [Feather Mail Ephemeral](https://github.com/feather-framework/feather-mail-ephemeral)
 
 ## Development
 
