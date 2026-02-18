@@ -10,7 +10,7 @@ var defaultSwiftSettings: [SwiftSetting] = [
     // https://forums.swift.org/t/experimental-support-for-lifetime-dependencies-in-swift-6-2-and-beyond/78638
     .enableExperimentalFeature("Lifetimes"),
     // https://github.com/swiftlang/swift/pull/65218
-    .enableExperimentalFeature("AvailabilityMacro=FeatherMailSMTP:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
+    .enableExperimentalFeature("AvailabilityMacro=featherMailSMTP:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
 ]
 
 #if compiler(>=6.2)
@@ -37,7 +37,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.0.0"),
         .package(url: "https://github.com/BinaryBirds/swift-nio-smtp", .upToNextMinor(from: "1.0.0-beta.1")),
-        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.2"),
+        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.3"),
         // [docc-plugin-placeholder]
     ],
     targets: [
