@@ -1,6 +1,6 @@
 //
-//  FeatherSMTPMailTestSuite.swift
-//  feather-smtp-mail
+//  FeatherMailSMTPTestSuite.swift
+//  feather-mail-smtp
 //
 //  Created by Tibor Bodecs on 2023. 01. 16..
 //
@@ -11,10 +11,10 @@ import Logging
 import Testing
 import NIOSMTP
 import FeatherMail
-@testable import FeatherSMTPMail
+@testable import FeatherMailSMTP
 
 @Suite
-struct FeatherSMTPMailTestSuite {
+struct FeatherMailSMTPTestSuite {
 
     // MARK: - Environment configuration
 
@@ -31,7 +31,7 @@ struct FeatherSMTPMailTestSuite {
         port: Int? = nil,
         username: String? = nil,
         password: String? = nil,
-        _ closure: @escaping @Sendable (SMTPMailClient) async throws -> Void
+        _ closure: @escaping @Sendable (MailClientSMTP) async throws -> Void
     ) async throws {
         let signInMethod: SignInMethod
         if let username, let password {
@@ -56,7 +56,7 @@ struct FeatherSMTPMailTestSuite {
         let mailEncoder = RawMailEncoder(
             headerDateEncodingStrategy: { formatDateHeader() }
         )
-        let client = SMTPMailClient(
+        let client = MailClientSMTP(
             configuration: config,
             mailEncoder: mailEncoder,
             eventLoopGroup: eventLoopGroup

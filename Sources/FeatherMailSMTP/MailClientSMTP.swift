@@ -1,6 +1,6 @@
 //
-//  SMTPMailClient.swift
-//  feather-smtp-mail
+//  MailClientSMTP.swift
+//  feather-mail-smtp
 //
 //  Created by gerp83 on 2026. 01. 17.
 //
@@ -12,14 +12,14 @@ import NIOSMTP
 
 /// A mail client implementation backed by SMTP.
 ///
-/// `SMTPMailClient` is intended to be initialized once during server startup
+/// `MailClientSMTP` is intended to be initialized once during server startup
 /// and reused for the lifetime of the application. It validates mails,
 /// encodes them into SMTP-compatible DATA payloads, and delivers them using
 /// an internally managed SMTP client.
 ///
 /// The client owns the underlying SMTP transport. Event loop group lifecycle
 /// is managed by the provided `eventLoopGroup`.
-public struct SMTPMailClient: MailClient, Sendable {
+public struct MailClientSMTP: MailClient, Sendable {
 
     /// Validator applied before encoding and delivery.
     private let validator: MailValidator
