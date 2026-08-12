@@ -33,7 +33,7 @@ let package = Package(
         .library(name: "FeatherMailSMTP", targets: ["FeatherMailSMTP"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log", from: "1.6.0"),
+        .package(url: "https://github.com/apple/swift-log", from: "1.14.0"),
         .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.0.0"),
         .package(url: "https://github.com/BinaryBirds/swift-nio-smtp", .upToNextMinor(from: "1.0.0-beta.1")),

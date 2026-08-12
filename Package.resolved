@@ -1,5 +1,5 @@
 {
-  "originHash" : "37de869de7a0f8510770fbb5124bafde0e87c4be6bb87a7a969adb104d372031",
+  "originHash" : "d59c9b8984c7977a693aeb32681ee10acaf249cc5fb734d424d7fe8f7494873e",
   "pins" : [
     {
       "identity" : "feather-mail",
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
       "state" : {
-        "revision" : "7ee16e465622412764b0ff0c1301801dc71b8f61",
-        "version" : "1.9.0"
+        "revision" : "3ffafb9722d5d918c614feb496c8789a3b59d222",
+        "version" : "1.15.0"
       }
     },
     {
