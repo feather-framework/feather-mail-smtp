@@ -37,7 +37,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.0.0"),
         .package(url: "https://github.com/BinaryBirds/swift-nio-smtp", .upToNextMinor(from: "1.0.0-beta.1")),
-        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.3"),
+        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-rc.1"),
         // [docc-plugin-placeholder]
     ],
     targets: [
