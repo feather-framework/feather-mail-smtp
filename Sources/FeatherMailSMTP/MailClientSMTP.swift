@@ -30,9 +30,6 @@ public struct MailClientSMTP: MailClient, Sendable {
     /// Mail encoder provider used to build SMTP DATA payload encoders.
     private let mailEncoder: any MailEncoder
 
-    /// Logger used for SMTP operations.
-    private let logger: Logger
-
     /// Creates a new SMTP mail client.
     ///
     /// This initializer should typically be called during server startup.
@@ -44,22 +41,19 @@ public struct MailClientSMTP: MailClient, Sendable {
     ///   - mailEncoder: Optional provider used to create mail encoders.
     ///   - validator: Validator applied before delivery.
     ///   - eventLoopGroup: EventLoopGroup. Defaults to `.singletonMultiThreadedEventLoopGroup`.
-    ///   - logger: Logger used for SMTP request and transport logging.
     public init(
         configuration: Configuration,
         mailEncoder: any MailEncoder,
         validator: MailValidator = BasicMailValidator(),
-        eventLoopGroup: EventLoopGroup = .singletonMultiThreadedEventLoopGroup,
-        logger: Logger = .init(label: "feather.mail.smtp")
+        eventLoopGroup: EventLoopGroup = .singletonMultiThreadedEventLoopGroup
     ) {
         self.mailEncoder = mailEncoder
         self.validator = validator
         self.smtp = NIOSMTP(
             eventLoopGroup: eventLoopGroup,
             configuration: configuration,
-            logger: logger
+            logger: Logger.current
         )
-        self.logger = logger
     }
 
     /// Sends a mail using SMTP.

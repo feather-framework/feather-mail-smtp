@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import NIO
 import Logging
+import NIO
 import Testing
 import NIOSMTP
 import FeatherMail
@@ -33,41 +33,46 @@ struct FeatherMailSMTPTestSuite {
         password: String? = nil,
         _ closure: @escaping @Sendable (MailClientSMTP) async throws -> Void
     ) async throws {
-        let signInMethod: SignInMethod
-        if let username, let password {
-            signInMethod = .credentials(username: username, password: password)
-        }
-        else {
-            signInMethod =
-                config.user.isEmpty
-                ? .anonymous
-                : .credentials(username: config.user, password: config.pass)
-        }
-
-        let config = Configuration(
-            hostname: hostname ?? config.host,
-            port: port ?? 587,
-            signInMethod: signInMethod
-        )
-
-        let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        defer { Task { await shutdownEventLoopGroup(eventLoopGroup) } }
-
-        let mailEncoder = RawMailEncoder(
-            headerDateEncodingStrategy: { formatDateHeader() }
-        )
-        let client = MailClientSMTP(
-            configuration: config,
-            mailEncoder: mailEncoder,
-            eventLoopGroup: eventLoopGroup
-        )
-
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            group.addTask {
-                try await closure(client)
+        try await withLogger(Logger(label: "feather.mail.smtp")) { _ in
+            let signInMethod: SignInMethod
+            if let username, let password {
+                signInMethod = .credentials(
+                    username: username,
+                    password: password
+                )
             }
-            try await group.next()
-            group.cancelAll()
+            else {
+                signInMethod =
+                    config.user.isEmpty
+                    ? .anonymous
+                    : .credentials(username: config.user, password: config.pass)
+            }
+
+            let config = Configuration(
+                hostname: hostname ?? config.host,
+                port: port ?? 587,
+                signInMethod: signInMethod
+            )
+
+            let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+            defer { Task { await shutdownEventLoopGroup(eventLoopGroup) } }
+
+            let mailEncoder = RawMailEncoder(
+                headerDateEncodingStrategy: { formatDateHeader() }
+            )
+            let client = MailClientSMTP(
+                configuration: config,
+                mailEncoder: mailEncoder,
+                eventLoopGroup: eventLoopGroup
+            )
+
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                group.addTask {
+                    try await closure(client)
+                }
+                try await group.next()
+                group.cancelAll()
+            }
         }
     }
 

@@ -2,11 +2,7 @@
 
 SMTP-backed mail client for Feather Mail using SwiftNIO.
 
-[
-    ![Release: 1.0.0-beta.4](https://img.shields.io/badge/Release-1.0.0--beta.4-F05138)
-](
-    https://github.com/feather-framework/feather-mail-smtp/releases/tag/1.0.0-beta.4
-)
+[![Release: 1.0.0-rc.1](https://img.shields.io/badge/Release-1.0.0--rc.1-F05138)](https://github.com/feather-framework/feather-mail-smtp/releases/tag/1.0.0-rc.1)
 
 ## Features
 
@@ -34,7 +30,7 @@ SMTP-backed mail client for Feather Mail using SwiftNIO.
 Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-mail-smtp", exact: "1.0.0-beta.3"),
+.package(url: "https://github.com/feather-framework/feather-mail-smtp", exact: "1.0.0-rc.1"),
 ```
 
 Then add `FeatherMailSMTP` to your target dependencies:
@@ -45,13 +41,11 @@ Then add `FeatherMailSMTP` to your target dependencies:
 
 ## Usage
 
-[
-    ![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)
-](
-    https://feather-framework.github.io/feather-mail-smtp/
-)
+[![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)](https://feather-framework.github.io/feather-mail-smtp/)
 
 API documentation is available at the following link.
+
+The package uses `Logger.current` from [swift-log](https://github.com/apple/swift-log) for SMTP transport logging. Use `withLogger` to scope the logger when creating `MailClientSMTP`; the transport captures the current logger during initialization.
 
 > [!WARNING]
 > This repository is a work in progress, things can break until it reaches v1.0.0.
