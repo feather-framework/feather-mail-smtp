@@ -2,7 +2,7 @@
 
 SMTP-backed mail client for Feather Mail using SwiftNIO.
 
-[![Release: 1.0.0-beta.5](https://img.shields.io/badge/Release-1.0.0--beta.5-F05138)](https://github.com/feather-framework/feather-mail-smtp/releases/tag/1.0.0-beta.5)
+[![Release: 1.0.0-rc.1](https://img.shields.io/badge/Release-1.0.0--rc.1-F05138)](https://github.com/feather-framework/feather-mail-smtp/releases/tag/1.0.0-rc.1)
 
 ## Features
 
@@ -30,7 +30,7 @@ SMTP-backed mail client for Feather Mail using SwiftNIO.
 Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-mail-smtp", exact: "1.0.0-beta.5"),
+.package(url: "https://github.com/feather-framework/feather-mail-smtp", exact: "1.0.0-rc.1"),
 ```
 
 Then add `FeatherMailSMTP` to your target dependencies:

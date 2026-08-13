@@ -36,7 +36,10 @@ struct FeatherMailSMTPTestSuite {
         try await withLogger(Logger(label: "feather.mail.smtp")) { _ in
             let signInMethod: SignInMethod
             if let username, let password {
-                signInMethod = .credentials(username: username, password: password)
+                signInMethod = .credentials(
+                    username: username,
+                    password: password
+                )
             }
             else {
                 signInMethod =
