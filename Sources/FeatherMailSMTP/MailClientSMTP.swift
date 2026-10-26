@@ -5,10 +5,10 @@
 //  Created by gerp83 on 2026. 01. 17.
 //
 
+public import FeatherMail
 import Logging
-import FeatherMail
-import NIO
-import NIOSMTP
+public import NIO
+public import NIOSMTP
 
 /// A mail client implementation backed by SMTP.
 ///
@@ -22,7 +22,7 @@ import NIOSMTP
 public struct MailClientSMTP: MailClient, Sendable {
 
     /// Validator applied before encoding and delivery.
-    private let validator: MailValidator
+    private let validator: any MailValidator
 
     /// Underlying SMTP client responsible for protocol communication.
     private let smtp: NIOSMTP
@@ -44,8 +44,9 @@ public struct MailClientSMTP: MailClient, Sendable {
     public init(
         configuration: Configuration,
         mailEncoder: any MailEncoder,
-        validator: MailValidator = BasicMailValidator(),
-        eventLoopGroup: EventLoopGroup = .singletonMultiThreadedEventLoopGroup
+        validator: any MailValidator = BasicMailValidator(),
+        eventLoopGroup: any EventLoopGroup =
+            .singletonMultiThreadedEventLoopGroup
     ) {
         self.mailEncoder = mailEncoder
         self.validator = validator
@@ -93,7 +94,7 @@ public struct MailClientSMTP: MailClient, Sendable {
         try await validator.validate(mail)
     }
 
-    private func mapSMTPError(_ error: Error) -> MailError {
+    private func mapSMTPError(_ error: any Error) -> MailError {
         guard let smtpError = error as? NIOSMTPError else {
             return .unknown(error)
         }

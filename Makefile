@@ -44,5 +44,11 @@ test:
 	swift test --parallel
 	
 docker-test:
-	docker build -t tests . -f ./docker/tests/Dockerfile && docker run --rm tests
+	@set -e; \
+	if [[ -f .env ]]; then set -a; source .env; set +a; fi; \
+	for name in SMTP_HOST SMTP_USER SMTP_PASS SMTP_FROM SMTP_TO; do \
+		if [[ -z "$${!name:-}" ]]; then echo "Missing $$name; set it in .env or the environment." >&2; exit 1; fi; \
+	done; \
+	docker build -t tests . -f ./docker/tests/Dockerfile; \
+	docker run --rm -e SMTP_HOST -e SMTP_USER -e SMTP_PASS -e SMTP_FROM -e SMTP_TO tests
 
