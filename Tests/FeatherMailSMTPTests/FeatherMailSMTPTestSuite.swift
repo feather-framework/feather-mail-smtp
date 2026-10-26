@@ -76,7 +76,8 @@ struct FeatherMailSMTPTestSuite {
         }
     }
 
-    private func shutdownEventLoopGroup(_ eventLoopGroup: EventLoopGroup) async
+    private func shutdownEventLoopGroup(_ eventLoopGroup: any EventLoopGroup)
+        async
     {
         await withCheckedContinuation { continuation in
             eventLoopGroup.shutdownGracefully { _ in
